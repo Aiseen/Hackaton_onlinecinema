@@ -51,6 +51,7 @@ class FilmSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['likes'] = instance.likes.filter(like=True).count()
+        representation['favourits'] = instance.favourits.filter(favourite=True).count()
         rating_result = 0
         for rating in instance.ratings.all():
             rating_result += int(rating.rating)

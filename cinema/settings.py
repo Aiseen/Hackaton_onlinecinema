@@ -146,9 +146,9 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
-],'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 3}
+        'rest_framework.authentication.TokenAuthentication']}
+# ],'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+#     'PAGE_SIZE': 3}
 
 
 SWAGGER_SETTINGS = {
@@ -161,3 +161,10 @@ SWAGGER_SETTINGS = {
     }
 
 }
+
+BROKER_URL = 'redis://127.0.0.1:6379/0'
+BROKER_TRANSPORT = 'redis'
+
+
+
+

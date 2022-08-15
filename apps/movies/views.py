@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from apps.movies.models import Category, Film, Like, Review, Rating
+from apps.movies.models import Category, Film, Like, Review, Rating, Favourite
 from apps.movies.serializers import CategorySerializer, FilmSerializer, ReviewSerializer, RatingSerializer
 
 
@@ -20,13 +20,6 @@ class FilmView(ModelViewSet):
     search_fields = ['name', 'description']
     ordering_fields = ['company']
     permission_classes = [IsAuthenticated]
-
-    # @action(detail=False, methods=['GET'])
-    # def my_films(self, request, pk=None):
-    #     queryset = self.get_queryset()
-    #     queryset = queryset.filter(owner=request.user)
-    #     serializer = FilmSerializer(queryset, many=True)
-    #     return Response(serializer.data, status=200)
 
     @action(methods=['POST'], detail=True)
     def like(self, request, pk, *args, **kwargs):
@@ -53,7 +46,20 @@ class FilmView(ModelViewSet):
 
         serializers.save()
         return Response(request.data,status=201)
+    @action(methods=['POST'],detail=True)
+    def favourite(self,request,pk,*args,**kwargs):
+        try:
+            favourite_object, _ = Favourite.objects.get_or_create(owner=request.user, film_id=pk)
+            favourite_object.favourite = not favourite_object.favourite
+            favourite_object.save()
+            status = 'добавлено в фавориты'
 
+            if favourite_object.favourite:
+                return Response({'status':status})
+            status = 'убрано из фаворитов'
+            return Response({'status':status})
+        except:
+            return  Response('Такого фильма нет')
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             permissions = []

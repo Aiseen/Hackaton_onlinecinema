@@ -100,8 +100,9 @@ class Favourite(models.Model):
                               related_name='favourits')
     film = models.ForeignKey(Film,
                              on_delete=models.CASCADE,
-                             related_name='favourits')
-    Favourite = models.BooleanField('фаворит', default=True)
+                             related_name='favourits',
+                             verbose_name='film')
+    favourite = models.BooleanField('фаворит', default=True)
 
 
     def __str__(self):
