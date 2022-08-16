@@ -22,5 +22,4 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger')),
     path('api/v1/account/', include('apps.account.urls')),
     path('api/v1/movies/', include('apps.movies.urls')),
-    path('social-auth/', include('social_django.urls', namespace="social"))
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
